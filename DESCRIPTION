@@ -1,0 +1,31 @@
+Package: xoiGBS
+Version: 0.1.1
+Date: 2025-02-12
+Title: Analyze recombination and crossover interference with sequence-based genotypes
+Description: Analyze recombination and crossover interference from genotyping-by-sequencing (GBS) data on a backcross.
+Author: Karl W Broman [aut, cre] (<https://orcid.org/0000-0002-4914-6671>)
+Maintainer: Karl W Broman <broman@wisc.edu>
+Authors@R: c(person("Karl W", "Broman", role=c("aut", "cre"),
+             email="broman@wisc.edu", comment=c(ORCID = "0000-0002-4914-6671")))
+Depends:
+    R (>= 3.5.0)
+Imports:
+    graphics,
+    parallel,
+    utils,
+    stats
+Suggests:
+    testthat,
+    devtools,
+    roxygen2,
+    knitr,
+    rmarkdown
+License: MIT + file LICENSE
+URL: https://github.com/kbroman/xoiGBS
+BugReports: https://github.com/kbroman/xoiGBS/issues
+LazyData: true
+Encoding: UTF-8
+ByteCompile: true
+VignetteBuilder: knitr
+RoxygenNote: 7.3.2
+Roxygen: list(markdown=TRUE)
