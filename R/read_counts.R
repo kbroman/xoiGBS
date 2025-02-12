@@ -24,7 +24,6 @@ read_counts <-
                    list.files(dir, pattern="\\.gz$"))
         files <- file.path(dir, files)
     }
-    return(files)
 
     # could make this multi-threaded?
     result <- lapply(files, read_counts_file)
