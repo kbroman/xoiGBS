@@ -13,7 +13,9 @@ Imports:
     graphics,
     parallel,
     utils,
-    stats
+    stats,
+    R.utils,
+    data.table
 Suggests:
     testthat,
     devtools,
