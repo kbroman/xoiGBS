@@ -10,24 +10,16 @@ Authors@R: c(person("Karl W", "Broman", role=c("aut", "cre"),
 Depends:
     R (>= 3.5.0)
 Imports:
-    graphics,
-    parallel,
-    utils,
-    stats,
     R.utils,
     data.table
 Suggests:
     testthat,
     devtools,
-    roxygen2,
-    knitr,
-    rmarkdown
+    roxygen2
 License: MIT + file LICENSE
 URL: https://github.com/kbroman/xoiGBS
 BugReports: https://github.com/kbroman/xoiGBS/issues
-LazyData: true
 Encoding: UTF-8
 ByteCompile: true
-VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Roxygen: list(markdown=TRUE)
