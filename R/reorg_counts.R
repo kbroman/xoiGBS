@@ -20,7 +20,7 @@ reorg_counts <-
     chr <- unique(unlist(lapply(counts, function(a) unique(a[,1]))))
 
     # clean version of those names
-    cchr <- ifelse(clean_chr, sub("^chr", "", chr), chr)
+    if(clean_chr) cchr <- sub("^chr", "", chr) else cchr <- chr
 
     ind <- names(counts)
     alleles <- sub("Count_", "", colnames(counts[[1]])[5:6])
