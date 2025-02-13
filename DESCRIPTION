@@ -1,6 +1,6 @@
 Package: xoiGBS
-Version: 0.1.1
-Date: 2025-02-12
+Version: 0.1.2
+Date: 2025-02-13
 Title: Analyze recombination and crossover interference with sequence-based genotypes
 Description: Analyze recombination and crossover interference from genotyping-by-sequencing (GBS) data on a backcross.
 Author: Karl W Broman [aut, cre] (<https://orcid.org/0000-0002-4914-6671>)
