@@ -46,9 +46,11 @@ reorg_counts <-
     ind <- names(counts)
     alleles <- sub("Count_", "", colnames(counts[[1]])[5:6])
 
+    output_counts <- vector("list", length(chr))
+    names(output_counts) <- chr
+
     if(is.null(map)) {
-        map <- output_counts <- vector("list", length(chr))
-        names(map) <- names(output_counts) <- chr
+        map <- output_counts
     } else { # temporarily use ugly names
         names(map) <- chr
 
