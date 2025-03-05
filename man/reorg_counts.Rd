@@ -4,11 +4,15 @@
 \alias{reorg_counts}
 \title{reorganize count data}
 \usage{
-reorg_counts(counts, clean_chr = TRUE, quiet = TRUE)
+reorg_counts(counts, map = NULL, clean_chr = TRUE, quiet = TRUE)
 }
 \arguments{
 \item{counts}{A list of data frames, one per individual, with six columns: chromosome, basepairs
 position, allele1, allele2, readcount1, and readcount 2, as read with \code{read_counts()}.}
+
+\item{map}{Optional map of SNPs to consider in the output, as a
+list of vectors of marker positions. If provided, any other
+positions will be ignored.}
 
 \item{clean_chr}{If TRUE, remove "chr" from the chromosome names, so chr13 becomes just 13}
 
