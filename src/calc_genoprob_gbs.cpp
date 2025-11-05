@@ -13,6 +13,7 @@ NumericVector calc_genoprob_gbs(const IntegerMatrix& countsA, // columns are ind
     const int n_ind = genotypes.cols();
     const int n_mar = genotypes.rows();
     const int n_gen = 2;
+    const int matsize = n_gen*n_ind; // size of genotype x individual matrix
 
     // check inputs
     if(countsB.cols() != n_ind || countsB.rows() != n_mar)
@@ -37,24 +38,22 @@ NumericVector calc_genoprob_gbs(const IntegerMatrix& countsA, // columns are ind
 
         // possible genotypes for this individual
         // forward/backward equations
-        NumericMatrix alpha = forwardEquations(cross, genotypes(_,ind), founder_geno, is_X_chr, is_female[ind],
-                                               cross_info(_,ind), rec_frac, marker_index, error_prob,
-                                               poss_gen);
-        NumericMatrix beta = backwardEquations(cross, genotypes(_,ind), founder_geno, is_X_chr, is_female[ind],
-                                               cross_info(_,ind), rec_frac, marker_index, error_prob,
-                                               poss_gen);
+        NumericMatrix alpha = forwardEquations(countsA(_,ind), countsB(_,ind),
+                                               rec_frac, error_prob1, error_prob2);
+        NumericMatrix beta = backwardEquations(countsA(_,ind), countsB(_,ind),
+                                               rec_frac, error_prob1, error_prob2);
 
         // calculate genotype probabilities
-        for(int pos=0, matindex=n_gen*ind; pos<n_pos; pos++, matindex += matsize) {
-            int g = poss_gen[0]-1;
+        for(int pos=0, matindex=n_gen*ind; pos<n_mar; pos++, matindex += matsize) {
+            int g = 0;
             double sum_at_pos = genoprobs[matindex+g] = alpha(0,pos) + beta(0,pos);
-            for(int i=1; i<n_poss_gen; i++) {
-                int g = poss_gen[i]-1;
+            for(int i=1; i<n_gen; i++) {
+                int g = i;
                 double val = genoprobs[matindex+g] = alpha(i,pos) + beta(i,pos);
                 sum_at_pos = addlog(sum_at_pos, val);
             }
-            for(int i=0; i<n_poss_gen; i++) {
-                int g = poss_gen[i]-1;
+            for(int i=0; i<n_gen; i++) {
+                int g = i;
                 genoprobs[matindex+g] = exp(genoprobs[matindex+g] - sum_at_pos);
             }
         }
