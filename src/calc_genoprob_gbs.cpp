@@ -8,6 +8,7 @@ NumericVector calc_genoprob(const IntegerMatrix& countsA, // columns are individ
 {
     const int n_ind = genotypes.cols();
     const int n_mar = genotypes.rows();
+    const int n_gen = 2;
 
     // check inputs
     if(countsB.cols() != n_ind || countsB.rows() != n_mar)
@@ -55,7 +56,7 @@ NumericVector calc_genoprob(const IntegerMatrix& countsA, // columns are individ
         }
     } // loop over individuals
 
-    genoprobs.attr("dim") = Dimension(n_gen, n_ind, n_pos);
+    genoprobs.attr("dim") = Dimension(n_gen, n_ind, n_mar);
     return genoprobs;
 }
 
@@ -68,36 +69,27 @@ NumericMatrix forwardEquations(const IntegerVector& countsA,
                                const double error_prob1,
                                const double error_prob2)
 {
-    int n_pos = marker_index.size();
-
-    // possible genotypes for this chromosome and individual
-    int n_gen = poss_gen.size();
+    const int n_mar = countsA.size();
+    const int n_gen = 2;
 
     // to contain ln Pr(G_i = g | marker data)
-    NumericMatrix alpha(n_gen, n_pos);
+    NumericMatrix alpha(n_gen, n_mar);
 
     // initialize alphas
     for(int i=0; i<n_gen; i++) {
-        int g = poss_gen[i];
-        alpha(i,0) = init(g, is_X_chr, is_female, cross_info);
-        if(marker_index[0] >= 0)
-            alpha(i,0) += emit(genotypes[marker_index[0]], g, error_prob,
-                                      founder_geno(_, marker_index[0]), is_X_chr, is_female, cross_info);
+        alpha(i,0) = init(i) +
+            emit(countsA[0], countsB[0], i, error_prob1, error_prob2);
     }
 
-    for(int pos=1; pos<n_pos; pos++) {
+    for(int mar=1; mar<n_mar; mar++) {
         for(int ir=0; ir<n_gen; ir++) {
-            alpha(ir,pos) = alpha(0, pos-1) + step(poss_gen[0], poss_gen[ir], rec_frac[pos-1],
-                                                          is_X_chr, is_female, cross_info);
+            alpha(ir,mar) = alpha(0, mar-1) + step(0, ir, rec_frac[mar-1]);
 
             for(int il=1; il<n_gen; il++)
-                alpha(ir,pos) = addlog(alpha(ir,pos), alpha(il,pos-1) +
-                                       step(poss_gen[il], poss_gen[ir], rec_frac[pos-1],
-                                                   is_X_chr, is_female, cross_info));
+                alpha(ir,mar) = addlog(alpha(ir,mar), alpha(il,mar-1) +
+                                       step(il, ir, rec_frac[mar-1]));
 
-            if(marker_index[pos]>=0)
-                alpha(ir,pos) += emit(genotypes[marker_index[pos]], poss_gen[ir], error_prob,
-                                             founder_geno(_, marker_index[pos]), is_X_chr, is_female, cross_info);
+            alpha(ir,mar) += emit(countsA[mar], countsB[mar], ir, error_prob1, error_prob2);
         }
     }
 
@@ -113,26 +105,21 @@ NumericMatrix backwardEquations(const IntegerVector& countsA,
                                 const double error_prob1,
                                 const double error_prob2)
 {
-    int n_pos = marker_index.size();
-
-    // possible genotypes for this chromosome and individual
-    int n_gen = poss_gen.size();
+    const int n_mar = countsA.size();
+    const int n_gen = 2;
 
     // to contain ln Pr(G_i = g | marker data)
-    NumericMatrix beta(n_gen, n_pos);
+    NumericMatrix beta(n_gen, n_mar)
 
     // backward equations
-    for(int pos = n_pos-2; pos >= 0; pos--) {
+    for(int mar = n_mar-2; mar >= 0; mar--) {
         for(int il=0; il<n_gen; il++) {
             for(int ir=0; ir<n_gen; ir++) {
-                double to_add = beta(ir,pos+1) + step(poss_gen[il], poss_gen[ir], rec_frac[pos],
-                                                              is_X_chr, is_female, cross_info);
-                if(marker_index[pos+1] >=0)
-                    to_add += emit(genotypes[marker_index[pos+1]], poss_gen[ir], error_prob,
-                                          founder_geno(_, marker_index[pos+1]), is_X_chr, is_female, cross_info);
+                double to_add = beta(ir,mar+1) + step(il, ir, rec_frac[mar]) +
+                    emit(countsA[mar], countsB[mar], ir, error_prob1, error_prob2);
 
-                if(ir==0) beta(il,pos) = to_add;
-                else beta(il,pos) = addlog(beta(il,pos), to_add);
+                if(ir==0) beta(il,mar) = to_add;
+                else beta(il,mar) = addlog(beta(il,mar), to_add);
             }
         }
     }
@@ -172,7 +159,13 @@ const double step(const int gen_left, const int gen_right, const double rec_frac
 
 // emit probability for backcross; GBS data
 const double emit(const int countA, const int countB, const int true_gen,
-                  const double error_prob1, const_double error_prob2)
+                  const double error_prob1, const double error_prob2)
 {
+    double prob_het = (countA+countB)*log(0.5);
+    double prob_hom = countA*log(1-error_prob1) + countB*log(error_prob1);
 
+    if(true_gen == 0) // homozygous
+        return(log( (1.0-error_prob2)*exp(prob_hom) + error_prob2*exp(prob_het)));
+    else // heterozygous
+        return(log( (1.0-error_prob2)*exp(prob_het) + error_prob2*exp(prob_hom)));
 }
