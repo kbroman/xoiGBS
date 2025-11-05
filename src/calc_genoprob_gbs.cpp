@@ -10,8 +10,8 @@ NumericVector calc_genoprob_gbs(const IntegerMatrix& countsA, // columns are ind
                                 const double error_prob1,
                                 const double error_prob2)
 {
-    const int n_ind = genotypes.cols();
-    const int n_mar = genotypes.rows();
+    const int n_ind = countsA.cols();
+    const int n_mar = countsA.rows();
     const int n_gen = 2;
     const int matsize = n_gen*n_ind; // size of genotype x individual matrix
 
@@ -112,7 +112,7 @@ NumericMatrix backwardEquations(const IntegerVector& countsA,
     const int n_gen = 2;
 
     // to contain ln Pr(G_i = g | marker data)
-    NumericMatrix beta(n_gen, n_mar)
+    NumericMatrix beta(n_gen, n_mar);
 
     // backward equations
     for(int mar = n_mar-2; mar >= 0; mar--) {

@@ -2,28 +2,32 @@
 #ifndef CALC_GENOPROB_GBS_H
 #define CALC_GENOPROB_GBS_H
 
+#include <Rcpp.h>
+
+using namespace Rcpp;
+
 // calculate conditional genotype probabilities given multipoint marker data
-NumericVector calc_genoprob_gbs(const IntegerMatrix& countsA, // columns are individuals, rows are markers
-                                const IntegerMatrix& countsB,
-                                const NumericVector& rec_frac,   // length nrow(countsA)-1
-                                const double error_prob1,
-                                const double error_prob2);
+Rcpp::NumericVector calc_genoprob_gbs(const Rcpp::IntegerMatrix& countsA, // columns are individuals, rows are markers
+                                      const Rcpp::IntegerMatrix& countsB,
+                                      const Rcpp::NumericVector& rec_frac,   // length nrow(countsA)-1
+                                      const double error_prob1,
+                                      const double error_prob2);
 
 
 // forward equations
-NumericMatrix forwardEquations(const IntegerVector& countsA,
-                               const IntegerVector& countsB,
-                               const NumericVector& rec_frac,
-                               const double error_prob1,
-                               const double error_prob2);
+Rcpp::NumericMatrix forwardEquations(const Rcpp::IntegerVector& countsA,
+                                     const Rcpp::IntegerVector& countsB,
+                                     const Rcpp::NumericVector& rec_frac,
+                                     const double error_prob1,
+                                     const double error_prob2);
 
 
 // backward Equations
-NumericMatrix backwardEquations(const IntegerVector& countsA,
-                                const IntegerVector& countsB,
-                                const NumericVector& rec_frac,
-                                const double error_prob1,
-                                const double error_prob2);
+Rcpp::NumericMatrix backwardEquations(const Rcpp::IntegerVector& countsA,
+                                      const Rcpp::IntegerVector& countsB,
+                                      const Rcpp::NumericVector& rec_frac,
+                                      const double error_prob1,
+                                      const double error_prob2);
 
 // Calculate addlog(a,b) = log[exp(a) + exp(b)]
 double addlog(const double a, const double b);
