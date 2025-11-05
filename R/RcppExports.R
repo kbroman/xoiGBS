@@ -9,11 +9,3 @@ addlog <- function(a, b) {
     .Call('_xoiGBS_addlog', PACKAGE = 'xoiGBS', a, b)
 }
 
-.calc_genoprob <- function(countsA, countsB, rec_frac, error_prob1, error_prob2) {
-    .Call('_xoiGBS_calc_genoprob_gbs', PACKAGE = 'xoiGBS', countsA, countsB, rec_frac, error_prob1, error_prob2)
-}
-
-addlog <- function(a, b) {
-    .Call('_xoiGBS_addlog', PACKAGE = 'xoiGBS', a, b)
-}
-

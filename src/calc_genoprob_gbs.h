@@ -3,7 +3,6 @@
 #define CALC_GENOPROB_GBS_H
 
 // calculate conditional genotype probabilities given multipoint marker data
-// [[Rcpp::export(".calc_genoprob")]]
 NumericVector calc_genoprob_gbs(const IntegerMatrix& countsA, // columns are individuals, rows are markers
                                 const IntegerMatrix& countsB,
                                 const NumericVector& rec_frac,   // length nrow(countsA)-1
@@ -27,7 +26,6 @@ NumericMatrix backwardEquations(const IntegerVector& countsA,
                                 const double error_prob2);
 
 // Calculate addlog(a,b) = log[exp(a) + exp(b)]
-// [[Rcpp::export]]
 double addlog(const double a, const double b);
 
 // init probability for backcross

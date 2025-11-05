@@ -37,37 +37,8 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// calc_genoprob_gbs
-NumericVector calc_genoprob_gbs(const IntegerMatrix& countsA, const IntegerMatrix& countsB, const NumericVector& rec_frac, const double error_prob1, const double error_prob2);
-RcppExport SEXP _xoiGBS_calc_genoprob_gbs(SEXP countsASEXP, SEXP countsBSEXP, SEXP rec_fracSEXP, SEXP error_prob1SEXP, SEXP error_prob2SEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type countsA(countsASEXP);
-    Rcpp::traits::input_parameter< const IntegerMatrix& >::type countsB(countsBSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type rec_frac(rec_fracSEXP);
-    Rcpp::traits::input_parameter< const double >::type error_prob1(error_prob1SEXP);
-    Rcpp::traits::input_parameter< const double >::type error_prob2(error_prob2SEXP);
-    rcpp_result_gen = Rcpp::wrap(calc_genoprob_gbs(countsA, countsB, rec_frac, error_prob1, error_prob2));
-    return rcpp_result_gen;
-END_RCPP
-}
-// addlog
-double addlog(const double a, const double b);
-RcppExport SEXP _xoiGBS_addlog(SEXP aSEXP, SEXP bSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const double >::type a(aSEXP);
-    Rcpp::traits::input_parameter< const double >::type b(bSEXP);
-    rcpp_result_gen = Rcpp::wrap(addlog(a, b));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_xoiGBS_calc_genoprob_gbs", (DL_FUNC) &_xoiGBS_calc_genoprob_gbs, 5},
-    {"_xoiGBS_addlog", (DL_FUNC) &_xoiGBS_addlog, 2},
     {"_xoiGBS_calc_genoprob_gbs", (DL_FUNC) &_xoiGBS_calc_genoprob_gbs, 5},
     {"_xoiGBS_addlog", (DL_FUNC) &_xoiGBS_addlog, 2},
     {NULL, NULL, 0}
