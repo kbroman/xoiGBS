@@ -1,6 +1,10 @@
+#include "calc_genoprob_gbs.h"
+#include <math.h>
+#include <Rcpp.h>
+
 // calculate conditional genotype probabilities given multipoint marker data
 // [[Rcpp::export(".calc_genoprob")]]
-NumericVector calc_genoprob(const IntegerMatrix& countsA, // columns are individuals, rows are markers
+NumericVector calc_genoprob_gbs(const IntegerMatrix& countsA, // columns are individuals, rows are markers
                             const IntegerMatrix& countsB,
                             const NumericVector& rec_frac,   // length nrow(countsA)-1
                             const double error_prob1,
@@ -145,20 +149,20 @@ double addlog(const double a, const double b)
 
 
 // init probability for backcross
-const double init(const int true_gen) // assume true_gen = 0 or 1
+double init(const int true_gen) // assume true_gen = 0 or 1
 {
     return log(0.5);
 }
 
 // step probability for backcross (1-rf or rf)
-const double step(const int gen_left, const int gen_right, const double rec_frac)
+double step(const int gen_left, const int gen_right, const double rec_frac)
 {
     if(gen_left==gen_right) return log(1.0-rec_frac);
     else return log(rec_frac);
 }
 
 // emit probability for backcross; GBS data
-const double emit(const int countA, const int countB, const int true_gen,
+double emit(const int countA, const int countB, const int true_gen,
                   const double error_prob1, const double error_prob2)
 {
     double prob_het = (countA+countB)*log(0.5);
