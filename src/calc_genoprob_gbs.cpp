@@ -5,10 +5,10 @@
 // calculate conditional genotype probabilities given multipoint marker data
 // [[Rcpp::export(".calc_genoprob")]]
 NumericVector calc_genoprob_gbs(const IntegerMatrix& countsA, // columns are individuals, rows are markers
-                            const IntegerMatrix& countsB,
-                            const NumericVector& rec_frac,   // length nrow(countsA)-1
-                            const double error_prob1,
-                            const double error_prob2)
+                                const IntegerMatrix& countsB,
+                                const NumericVector& rec_frac,   // length nrow(countsA)-1
+                                const double error_prob1,
+                                const double error_prob2)
 {
     const int n_ind = genotypes.cols();
     const int n_mar = genotypes.rows();
