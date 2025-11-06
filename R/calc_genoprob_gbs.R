@@ -18,6 +18,7 @@ calc_genoprob_gbs <-
 #    - using multiple cores
 
 # pr <- .calc_genoprob_gbs(countsA, countsB, rec_frac, error_prob1, error_prob2)
+# counts ind x mar
 
 #    - just return prob(het) as a matrix
 
