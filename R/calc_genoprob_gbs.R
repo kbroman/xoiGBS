@@ -58,4 +58,7 @@ calc_genoprob_gbs <-
     rf <- mf(diff(map))
 
     pr <- .calc_genoprob_gbs(counts[,,1], counts[,,2], rf, error_prob1, error_prob2)
+
+    # return just probability(AA), and make it pos x ind
+    t(pr[1,,])
 }

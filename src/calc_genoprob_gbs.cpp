@@ -30,7 +30,7 @@ NumericVector calc_genoprob_gbs(const IntegerMatrix& countsA, // columns are ind
             throw std::range_error("rec_frac must be >= 0 and <= 0.5");
     }
 
-    NumericVector genoprobs(n_mar*n_ind);
+    NumericVector genoprobs(n_mar*n_ind*n_gen);
 
     for(int ind=0; ind<n_ind; ind++) {
 
