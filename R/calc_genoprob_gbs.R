@@ -18,6 +18,7 @@
 #'
 #' @return Matrix of genotype probabilities, positions x individuals, for Pr(het)
 #'
+#' @importFrom stats uniroot
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib xoiGBS, .registration=TRUE
 calc_genoprob_gbs <-

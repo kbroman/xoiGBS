@@ -12,7 +12,8 @@ Depends:
 Imports:
     Rcpp (>= 1.0.7),
     R.utils,
-    data.table
+    data.table,
+    stats
 Suggests:
     testthat,
     devtools,
