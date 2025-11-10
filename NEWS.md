@@ -1,4 +1,4 @@
-## xoiGBS 0.1.4 (2025-11-05)
+## xoiGBS 0.1.4 (2025-11-10)
 
 - Added calc_genoprob_gbs to calculate genotype probabilities from
   genotyping-by-sequencing (GBS) data (counts of alleles at SNPs) for
