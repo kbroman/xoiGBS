@@ -14,7 +14,8 @@ calc_genoprob_gbs(
 )
 }
 \arguments{
-\item{counts}{Three-dimensional array of counts, positions x individuals x two alleles}
+\item{counts}{Three-dimensional array of counts, positions x individuals x two alleles, with alleles A and B
+where we are expecting genotypes AA and AB}
 
 \item{map}{Vector of marker positions, same length as \code{nrow(counts)}, in cM}
 
@@ -27,7 +28,7 @@ calc_genoprob_gbs(
 \item{cores}{Number of CPU cores to use, for multi-core calculations}
 }
 \value{
-Matrix of genotype probabilities, positions x individuals
+Matrix of genotype probabilities, positions x individuals, for Pr(het)
 }
 \description{
 Calculate genotype probabilities using an HMM, from high-throughput sequencing data with counts of alleles at SNPs

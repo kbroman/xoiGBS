@@ -3,7 +3,8 @@
 #'
 #' Calculate genotype probabilities using an HMM, from high-throughput sequencing data with counts of alleles at SNPs
 #'
-#' @param counts Three-dimensional array of counts, positions x individuals x two alleles
+#' @param counts Three-dimensional array of counts, positions x individuals x two alleles, with alleles A and B
+#' where we are expecting genotypes AA and AB
 #'
 #' @param map Vector of marker positions, same length as `nrow(counts)`, in cM
 #'
@@ -15,7 +16,7 @@
 #'
 #' @param cores Number of CPU cores to use, for multi-core calculations
 #'
-#' @return Matrix of genotype probabilities, positions x individuals
+#' @return Matrix of genotype probabilities, positions x individuals, for Pr(het)
 #'
 #' @importFrom Rcpp sourceCpp
 #' @useDynLib xoiGBS, .registration=TRUE
@@ -60,5 +61,7 @@ calc_genoprob_gbs <-
     pr <- .calc_genoprob_gbs(counts[,,1], counts[,,2], rf, error_prob1, error_prob2)
 
     # return just probability(AA), and make it pos x ind
-    t(pr[1,,])
+    pr <- t(pr[2,,])
+    dimnames(pr) <- dimnames(counts)[1:2]
+    pr
 }
