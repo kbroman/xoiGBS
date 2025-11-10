@@ -21,6 +21,7 @@
 #' @export
 #' @importFrom stats uniroot
 #' @importFrom Rcpp sourceCpp
+#' @importFrom parallel detectCores makeCluster stopCluster parLapply mclapply splitIndices
 #' @useDynLib xoiGBS, .registration=TRUE
 calc_genoprob_gbs <-
     function(counts, map, error_prob1=0.002, error_prob2=0.002,
@@ -60,10 +61,40 @@ calc_genoprob_gbs <-
 
     rf <- mf(diff(map))
 
-    pr <- .calc_genoprob_gbs(counts[,,1], counts[,,2], rf, error_prob1, error_prob2)
+    cores <- setup_cluster(cores, quiet=TRUE)
+    group <- parallel::splitIndices(ncol(counts), n_cores(cores))
+    group <- group[sapply(group, length)>0] # drop empty groups
+    groupindex <- seq(along=group)
+
+    # function for cluster
+    cluster_func <- function(index) {
+        ind <- group[[index]]
+        if(length(ind)==0) return(NULL) # no individuals in this group
+
+        # as.matrix() makes sure that if just 1 ind, still a matrix
+        pr <- .calc_genoprob_gbs(as.matrix(counts[,ind,1]), as.matrix(counts[,ind,2]), rf, error_prob1, error_prob2)
+
+        if(length(ind)==1) {
+            pr <- cbind(pr[2,,])
+        }
+        else {
+            pr <- .calc_genoprob_gbs(counts[,ind,1], counts[,ind,2], rf, error_prob1, error_prob2)
+            pr <- t(pr[2,,])
+        }
+
+        rownames(pr) <- rownames(counts)
+        colnames(pr) <- colnames(counts)[ind]
+
+        pr
+    }
+
+    if(n_cores(cores)==1) {
+        pr <- cluster_func(1)
+    } else {
+        pr <- cluster_lapply(cores, groupindex, cluster_func)
+        pr <- do.call("cbind", pr)
+    }
 
     # return just probability(AA), and make it pos x ind
-    pr <- t(pr[2,,])
-    dimnames(pr) <- dimnames(counts)[1:2]
     pr
 }

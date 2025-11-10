@@ -1,5 +1,5 @@
 Package: xoiGBS
-Version: 0.1.4
+Version: 0.1.5
 Date: 2025-11-10
 Title: Analyze Recombination and Crossover Interference with Sequence-Based Genotypes
 Description: Analyze recombination and crossover interference from genotyping-by-sequencing (GBS) data on a backcross.
@@ -13,7 +13,8 @@ Imports:
     Rcpp (>= 1.0.7),
     R.utils,
     data.table,
-    stats
+    stats,
+    parallel
 Suggests:
     testthat,
     devtools,
