@@ -33,3 +33,20 @@ test_that("order_ids works", {
     expect_equal(order_ids(input, decreasing=TRUE), rev(output))
 
 })
+
+
+test_that("order_ids works with duplicates", {
+
+    input <- c("BCD1", "BCD10", "BCD11_dup", "BCD11", "BCD13_dup1", "BCD13_dup2", "BCD13",
+               "BCD16", "BCD17", "BCD8", "BCD19", "BCD1_dup1")
+
+    output <- c(1, 12, 10, 2, 4, 3, 7, 5, 6, 8, 9, 11)
+
+    expect_equal(order_ids(input), output)
+
+    expect_equal(order_ids(input, decreasing=TRUE), rev(output))
+
+    expect_equal(sort_ids(input), input[output])
+    expect_equal(sort_ids(input, decreasing=TRUE), rev(input[output]))
+
+})
