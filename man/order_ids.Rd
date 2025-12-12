@@ -16,6 +16,23 @@ Input IDs, sorted numerically
 }
 \description{
 Get numeric order of individual IDs, when they're of the form blah25 or blah25-2
+Can also have dup info at the end, like blah25_dup1 or blah25_dup2
+}
+\details{
+We assume the ids have an initial non-numerial label,
+followed by a number, followed possibly by _dup and then
+another number. The IDs are sorted first by the initial
+non-numeric bit, then by the number, then by the duplicate
+number (with absense of \verb{_dup} taken to be duplicate "0" and
+_dup without a number taken to be duplicate "1").
+}
+\examples{
+ids <- c("BCA70", "BCA1", "PWD1", "PWD2", "BCA2", "BCA75",
+         "BCA70_dup", "PWD1_dup2", "PWD1_dup1")
+order_ids(ids)
+sort_ids(ids)
+sort_ids(ids, decreasing=TRUE)
+
 }
 \seealso{
 \code{sort_ids()}
