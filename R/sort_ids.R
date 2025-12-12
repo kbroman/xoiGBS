@@ -42,7 +42,10 @@ order_ids <-
     if(any(grepl("_dup", ids))) {
         spl <- strsplit(ids, "_dup")
         spl_len <- sapply(spl, length)
-        dup[spl_len > 1] <- sapply(spl[spl_len > 1], "[", 2)
+
+        if(any(spl_len > 1)) {
+            dup[spl_len > 1] <- sapply(spl[spl_len > 1], "[", 2)
+        }
 
         dup[spl_len==1 & grepl("_dup", ids)] <- 1
 

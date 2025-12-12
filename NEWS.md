@@ -1,4 +1,4 @@
-## xoiGBS 0.1.6 (2025-12-11)
+## xoiGBS 0.1.7 (2025-12-12)
 
 - Revise sort_ids() and order_ids() to handle IDs with _dup at the end
 
