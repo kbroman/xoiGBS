@@ -1,4 +1,4 @@
-## xoiGBS - analysis of recombination and crossoverinterference from GBS data
+## xoiGBS - analysis of recombination and crossover interference from GBS data
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/kbroman/xoiGBS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kbroman/xoiGBS/actions/workflows/R-CMD-check.yaml)
