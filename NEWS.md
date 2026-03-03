@@ -1,6 +1,11 @@
+## xoiGBS 0.1.8 (2026-03-03)
+
+- Add function inferXOloc() to infer crossover locations from genotype
+  probabilities.
+
 ## xoiGBS 0.1.7 (2025-12-12)
 
-- Revise sort_ids() and order_ids() to handle IDs with _dup at the end
+- Revise sort_ids() and order_ids() to handle IDs with _dup at the end.
 
 
 ## xoiGBS 0.1.5 (2025-11-10)
