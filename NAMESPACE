@@ -3,6 +3,7 @@
 export(calc_genoprob_gbs)
 export(inferXOloc)
 export(order_ids)
+export(randXOloc)
 export(read_counts)
 export(reorg_counts)
 export(sort_ids)

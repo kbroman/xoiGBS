@@ -1,10 +1,13 @@
-## xoiGBS 0.1.8 (2026-03-09)
+## xoiGBS 0.1.8 (2026-03-11)
 
 - Add function inferXOloc() to infer crossover locations from genotype
   probabilities.
 
 - Add function trimXO() for trimming tight double-crossovers from the
   output of inferXOloc().
+
+- Add function randXOloc() for randomizing the estimated crossover
+  locations, uniform within their intervals.
 
 
 ## xoiGBS 0.1.7 (2025-12-12)
