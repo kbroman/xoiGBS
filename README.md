@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/kbroman/xoiGBS/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kbroman/xoiGBS/actions/workflows/R-CMD-check.yaml)
+[![r-universe badge](https://kbroman.r-universe.dev/xoiGBS/badges/version)](https://kbroman.r-universe.dev/xoiGBS)
 [![zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18402889.svg)](https://doi.org/10.5281/zenodo.18402889)
 <!-- badges: end -->
 
