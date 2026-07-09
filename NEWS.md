@@ -1,3 +1,8 @@
+## xoiGBS 0.1.9 (2026-07-09)
+
+- cores=0 now results in use of all but 1 core, rather than all cores
+
+
 ## xoiGBS 0.1.8 (2026-03-12)
 
 - Add function inferXOloc() to infer crossover locations from genotype
